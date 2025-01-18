@@ -3,6 +3,8 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
+import { FaBalanceScale } from 'react-icons/fa'
+import { HiOutlineDocumentText } from 'react-icons/hi'
 import { IoAnalytics, IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline } from 'react-icons/io5'
 import { logout } from '@/actions/auth/logout'
 import { useUiStore } from '@/store/ui/ui.store'
@@ -50,12 +52,26 @@ export const Sidebar = () => {
           {
             !isAuthenticated
               ? (
-                <Link href='/auth/login'
-                  onClick={() => { closeMenu() }}
-                  className='flex items-center mt-10 p-2 hover:bg-primary hover:text-secondary rounded-none transition-all'>
-                  <IoLogInOutline size={30} />
-                  <span className='ml-3 text-xl'>Ingresar</span>
-                </Link>)
+                <>
+                  <Link href='/auth/login'
+                    onClick={() => { closeMenu() }}
+                    className='flex items-center mt-10 p-2 hover:bg-primary hover:text-secondary rounded-none transition-all'>
+                    <IoLogInOutline size={30} />
+                    <span className='ml-3 text-xl'>Ingresar</span>
+                  </Link>
+                  <Link href='/blog'
+                    onClick={() => { closeMenu() }}
+                    className='flex items-center mt-10 p-2 hover:bg-primary hover:text-secondary rounded-none transition-all'>
+                    <HiOutlineDocumentText size={30} />
+                    <span className='ml-3 text-xl'>Blog</span>
+                  </Link>
+                  <Link href='/info/terms'
+                    onClick={() => { closeMenu() }}
+                    className='flex items-center mt-10 p-2 hover:bg-primary hover:text-secondary rounded-none transition-all'>
+                    <FaBalanceScale size={25} />
+                    <span className='ml-3 text-xl'>Términos y condiciones</span>
+                  </Link>
+                </>)
               : (
                 <>
                   <Link href='/profile'

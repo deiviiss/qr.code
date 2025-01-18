@@ -10,18 +10,18 @@ export const Footer = () => {
           <div className="space-y-4">
             <nav className="flex flex-col space-y-3">
               <Link
-                href="https://davidhilera.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300"
-              >
-                Powered by deiviiss
-              </Link>
-              <Link
                 href="/info/terms"
                 className="hover:text-white transition-colors"
               >
                 Términos y condiciones
+              </Link>
+              <Link
+                href="https://davidhilera.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+              >
+                Hecho con ❤️ por Deiviiss
               </Link>
             </nav>
           </div>
