@@ -8,7 +8,7 @@ import { IoEllipsisHorizontalSharp } from 'react-icons/io5'
 import { toast } from 'sonner'
 import { ChangeRoleModal } from './ChangeRoleModal'
 import { toggleUserStatus } from '@/actions/users/toggle-user-status'
-import { noticeFailure, noticeSuccess } from '@/components/auth/LoginForm'
+import { noticeFailure, noticeSuccess } from '@/components/toast-notifications/ToastNotifications'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { changeUserRole } from '@/actions/users/change-user-role'
-import { noticeFailure, noticeSuccess } from '@/components/auth/LoginForm'
+import { noticeFailure, noticeSuccess } from '@/components/toast-notifications/ToastNotifications'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
