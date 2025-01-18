@@ -1,0 +1,227 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  user
+}
+
+enum Status {
+  unpaid
+  paided
+  shipped
+  delivered
+}
+
+enum ShippingMethod {
+  pickup
+  delivery
+}
+
+enum PaymentMethod {
+  paypal
+  mercadopago
+  cash
+  transfer
+}
+
+model Category {
+  id          String      @id @default(uuid())
+  name        String      @unique
+  description String?
+  products    Product[]
+  attribute   Attribute[]
+
+  @@map("categories")
+}
+
+model Product {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  history     String?
+  price       Float   @default(0)
+  slug        String  @unique
+  isActive    Boolean @default(true)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  productImage ProductImage[]
+  orderItem    OrderItem[]
+
+  createdAt             DateTime                @default(now())
+  productAttributeValue ProductAttributeValue[]
+
+  @@map("products")
+}
+
+model ProductImage {
+  id  String @id @default(uuid())
+  url String
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("product_images")
+}
+
+model Attribute {
+  id         String   @id @default(uuid())
+  name       String
+  inputType  String // e.g., "string", "number"
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  valueOptions          AttributeValueOption[]
+  productAttributeValue ProductAttributeValue[]
+
+  @@map("attributes")
+}
+
+model AttributeValueOption {
+  id                    String                  @id @default(uuid())
+  value                 String
+  attribute             Attribute               @relation(fields: [attributeId], references: [id])
+  attributeId           String
+  productAttributeValue ProductAttributeValue[]
+  orderItems            OrderItem[]
+
+  @@map("attribute_value_options")
+}
+
+model ProductAttributeValue {
+  id            String @id @default(uuid())
+  productId     String
+  attributeId   String
+  valueOptionId String
+  inStock       Int // Stock for this specific attribute-value combination
+
+  product     Product              @relation(fields: [productId], references: [id])
+  attribute   Attribute            @relation(fields: [attributeId], references: [id])
+  valueOption AttributeValueOption @relation(fields: [valueOptionId], references: [id])
+
+  @@unique([productId, attributeId, valueOptionId])
+  @@map("product_attribute_values")
+}
+
+model User {
+  id                  String  @id @default(uuid())
+  name                String
+  email               String  @unique
+  password            String?
+  emailVerified       Boolean @default(false)
+  phoneNumber         String
+  phoneNumberVerified Boolean @default(false)
+  hasPurchasedOnce    Boolean @default(false)
+  image               String?
+  role                Role    @default(user)
+  isActive            Boolean @default(true)
+
+  address UserAddress?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  order     Order[]
+
+  @@map("users")
+}
+
+model Country {
+  id           String         @id
+  name         String
+  userAddress  UserAddress[]
+  orderAddress OrderAddress[]
+
+  @@map("countries")
+}
+
+model UserAddress {
+  id         String  @id @default(uuid())
+  firstName  String
+  lastName   String
+  address    String
+  address2   String?
+  postalCode String
+  phone      String
+  city       String
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  @@map("user_addresses")
+}
+
+model Order {
+  id             String         @id @default(uuid())
+  subtotal       Float
+  shippingCost   Float          @default(0)
+  total          Float
+  itemsInOrder   Int
+  status         Status         @default(unpaid)
+  shippingMethod ShippingMethod
+  paymentMethod  PaymentMethod
+  isPaid         Boolean        @default(false)
+  paidAt         DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  orderItem      OrderItem[]
+  orderAddresses OrderAddress?
+
+  transactionId String?
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int
+  price    Float
+
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  attributes AttributeValueOption[]
+
+  @@map("order_items")
+}
+
+model OrderAddress {
+  id         String  @id @default(uuid())
+  firstName  String
+  lastName   String
+  address    String
+  address2   String?
+  postalCode String
+  city       String
+  phone      String
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId String @unique
+
+  @@map("order_addresses")
+}

@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Description
 
-## Getting Started
+This is a Next.js app that demonstrates how to use Next.js with Prisma and NextAuth.js.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- User management:
+  - Admin can create, edit, view, and deactivate users.
+- QR Code generation:
+  - Users can generate QR codes for their links.
+- Protected routes:
+  - Dashboard accessible only to authenticated users.
+- User profile:
+  - View and manage the logged-in user's profile.
+- Password hashing:
+  - Passwords are hashed using bcrypt.
+- JWT authentication:
+  - Users are authenticated using JWT tokens.
+- Database seeding:
+  - Users are seeded into the database.
+- Error handling:
+  - Error messages are displayed to the user.
+- Styling:
+  - Tailwind CSS is used for styling.
+- Built with modern tools:
+  - **Next.js** for server-side rendering and routing.
+  - **Prisma** for database management.
+  - **React** for the frontend interface.
+
+## Development
+
+### Steps to start the app in development
+
+1. Rename the .env.example to .env
+2. Replace the enviroment variables
+3. Execute the command:
+
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Set up the db
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+docker-compose up -d
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. Execute these prisma commands:
 
-## Learn More
+```
+npx prisma migrate dev; npx prisma generate
+```
 
-To learn more about Next.js, take a look at the following resources:
+6. Execute SEED
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+npm run seed
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+7. Run server with command:
 
-## Deploy on Vercel
+```
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Notes: default user
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Default user data in the seed file
+
+# Prisma commands
+
+```
+npx prisma init
+npx prisma migrate dev
+npx prisma generate
+```
