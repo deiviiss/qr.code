@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { FaBalanceScale } from 'react-icons/fa'
 import { HiOutlineDocumentText } from 'react-icons/hi'
-import { IoAnalytics, IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline } from 'react-icons/io5'
+import { IoAnalytics, IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPeopleOutline, IoPersonOutline, IoQrCodeOutline } from 'react-icons/io5'
 import { logout } from '@/actions/auth/logout'
 import { useUiStore } from '@/store/ui/ui.store'
 
@@ -53,11 +53,11 @@ export const Sidebar = () => {
             !isAuthenticated
               ? (
                 <>
-                  <Link href='/auth/login'
+                  <Link href='/'
                     onClick={() => { closeMenu() }}
                     className='flex items-center mt-10 p-2 hover:bg-primary hover:text-secondary rounded-none transition-all'>
-                    <IoLogInOutline size={30} />
-                    <span className='ml-3 text-xl'>Ingresar</span>
+                    <IoQrCodeOutline size={30} />
+                    <span className='ml-3 text-xl'>Generar QR</span>
                   </Link>
                   <Link href='/blog'
                     onClick={() => { closeMenu() }}
@@ -97,6 +97,13 @@ export const Sidebar = () => {
           {/* divisor */}
           <div className="w-full h-px bg-gray-100 rounded transition-all mt-5"></div>
         </div>
+
+        <Link href='/auth/login'
+          onClick={() => { closeMenu() }}
+          className='flex items-center mt-10 p-2 hover:bg-primary hover:text-secondary rounded-none transition-all'>
+          <IoLogInOutline size={30} />
+          <span className='ml-3 text-xl'>Ingresar</span>
+        </Link>
 
         {
           isAdmin && (

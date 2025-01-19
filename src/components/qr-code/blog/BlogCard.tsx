@@ -11,7 +11,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ title, description, slug, publishDate, readTime }: BlogCardProps) {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
+    <div className="shadow-md rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg">
       <div className="p-6">
         <h2 className="text-xl font-semibold text-gray-800 mb-2 hover:text-blue-600 transition-colors">
           <Link href={`/blog/${slug}`}>{title}</Link>
