@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { titleFont } from '@/config/fonts'
 
@@ -23,6 +24,17 @@ export const Footer = () => {
               >
                 Hecho con ❤️ por Deiviiss
               </Link>
+              <div className="flex items-center space-x-4">
+                <Link
+                  href="https://buymeacoffee.com/deiviiss"
+                  target="_blank"
+                  className="text-gray-400 hover:text-white transition-colors"
+                  rel="noopener noreferrer"
+                  aria-label="Síguenos en Facebook"
+                >
+                  <Image src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me a Coffee" width={120} height={35} />
+                </Link>
+              </div>
             </nav>
           </div>
 
